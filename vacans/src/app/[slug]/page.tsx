@@ -97,7 +97,7 @@ export default async function PublicPage({ params }: Props) {
         descripcion:    profesional.descripcion ?? null,
         telefono_wa:    profesional.telefono_wa,
         foto_url:       profesional.foto_url ?? null,
-        color_primario: profesional.color_primario ?? '#6366f1',
+        color_primario: profesional.color_primario ?? '#CC0000',
       }}
       tiposTurno={tiposTurno}
       slotsByTipo={slotsByTipo}

@@ -51,7 +51,7 @@ export default function RegisterPage() {
           <p className="text-sm text-zinc-500">
             Te enviamos un link de confirmación. Una vez que lo confirmes podés ingresar.
           </p>
-          <a href="/login" className="block text-sm text-indigo-600 font-medium hover:underline mt-2">
+          <a href="/login" className="block text-sm text-red-600 font-medium hover:underline mt-2">
             Ir al login
           </a>
         </div>
@@ -67,7 +67,7 @@ export default function RegisterPage() {
               type="text"
               required
               placeholder="María Depilación"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 text-sm outline-none focus:border-red-400 focus:ring-2 focus:ring-red-100 transition"
             />
           </div>
 
@@ -75,7 +75,7 @@ export default function RegisterPage() {
             <label className="block text-sm font-medium text-zinc-700 mb-1.5">
               Tu link de Vacans
             </label>
-            <div className="flex items-center border border-zinc-200 rounded-xl overflow-hidden focus-within:border-indigo-400 focus-within:ring-2 focus-within:ring-indigo-100 transition">
+            <div className="flex items-center border border-zinc-200 rounded-xl overflow-hidden focus-within:border-red-400 focus-within:ring-2 focus-within:ring-red-100 transition">
               <span className="px-3 py-2.5 text-sm text-zinc-400 bg-zinc-50 border-r border-zinc-200 whitespace-nowrap">
                 vacans.xyz/
               </span>
@@ -101,7 +101,7 @@ export default function RegisterPage() {
             <label className="block text-sm font-medium text-zinc-700 mb-1.5">
               Teléfono WhatsApp
             </label>
-            <div className="flex items-center border border-zinc-200 rounded-xl overflow-hidden focus-within:border-indigo-400 focus-within:ring-2 focus-within:ring-indigo-100 transition">
+            <div className="flex items-center border border-zinc-200 rounded-xl overflow-hidden focus-within:border-red-400 focus-within:ring-2 focus-within:ring-red-100 transition">
               <span className="px-3 py-2.5 text-sm text-zinc-400 bg-zinc-50 border-r border-zinc-200">
                 +
               </span>
@@ -124,7 +124,7 @@ export default function RegisterPage() {
               required
               autoComplete="email"
               placeholder="tu@email.com"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 text-sm outline-none focus:border-red-400 focus:ring-2 focus:ring-red-100 transition"
             />
           </div>
 
@@ -137,7 +137,7 @@ export default function RegisterPage() {
               autoComplete="new-password"
               minLength={8}
               placeholder="Mínimo 8 caracteres"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 text-sm outline-none focus:border-red-400 focus:ring-2 focus:ring-red-100 transition"
             />
           </div>
 
@@ -150,7 +150,7 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={isPending || !!slugError || slug.length < 3}
-            className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-medium text-sm rounded-xl py-2.5 transition"
+            className="w-full bg-red-600 hover:bg-red-700 disabled:opacity-60 text-white font-medium text-sm rounded-xl py-2.5 transition"
           >
             {isPending ? 'Creando cuenta…' : 'Crear mi página'}
           </button>
@@ -160,7 +160,7 @@ export default function RegisterPage() {
 
       <p className="text-center text-sm text-zinc-500 mt-5">
         ¿Ya tenés cuenta?{' '}
-        <Link href="/login" className="text-indigo-600 font-medium hover:underline">
+        <Link href="/login" className="text-red-600 font-medium hover:underline">
           Ingresar
         </Link>
       </p>

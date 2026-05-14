@@ -68,12 +68,12 @@ export default function LandingPage() {
       {/* HERO */}
       <section className="pt-28 pb-20 px-6 text-center">
         <div className="max-w-2xl mx-auto">
-          <span className="inline-block text-xs font-semibold uppercase tracking-widest text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full mb-6">
+          <span className="inline-block text-xs font-semibold uppercase tracking-widest text-red-600 bg-red-50 px-3 py-1 rounded-full mb-6">
             Para emprendedores independientes
           </span>
           <h1 className="font-serif text-5xl sm:text-6xl text-zinc-900 leading-tight mb-6">
             Tu página de turnos,<br />
-            <span className="italic text-indigo-600">lista en minutos.</span>
+            <span className="italic text-red-600">lista en minutos.</span>
           </h1>
           <p className="text-lg text-zinc-500 leading-relaxed mb-10 max-w-lg mx-auto">
             Vacans es la forma más simple de que tus clientes vean tus horarios disponibles
@@ -82,7 +82,7 @@ export default function LandingPage() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/register"
-              className="inline-flex items-center justify-center gap-2 bg-indigo-600 text-white text-sm font-semibold px-8 py-3.5 rounded-full hover:bg-indigo-700 transition-colors"
+              className="inline-flex items-center justify-center gap-2 bg-red-600 text-white text-sm font-semibold px-8 py-3.5 rounded-full hover:bg-red-700 transition-colors"
             >
               Crear mi página gratis →
             </Link>
@@ -106,21 +106,21 @@ export default function LandingPage() {
           {/* Mini app header */}
           <div className="bg-white border-b border-zinc-100 px-3 pt-3 pb-0">
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-sm font-bold">
+              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-red-600 to-red-900 flex items-center justify-center text-white text-sm font-bold">
                 M
               </div>
               <div>
                 <p className="text-xs font-semibold text-zinc-900">María Depilación</p>
                 <p className="text-[10px] text-zinc-400">Flores, CABA</p>
               </div>
-              <span className="ml-auto text-[9px] font-bold text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded-full uppercase tracking-wide">vacans</span>
+              <span className="ml-auto text-[9px] font-bold text-red-600 bg-red-50 px-1.5 py-0.5 rounded-full uppercase tracking-wide">vacans</span>
             </div>
             <div className="flex gap-1.5 pb-2.5 overflow-x-hidden">
-              <span className="text-[10px] font-medium px-2.5 py-1 rounded-full bg-indigo-600 text-white whitespace-nowrap">Definitiva 30 min</span>
+              <span className="text-[10px] font-medium px-2.5 py-1 rounded-full bg-red-600 text-white whitespace-nowrap">Definitiva 30 min</span>
               <span className="text-[10px] font-medium px-2.5 py-1 rounded-full border border-zinc-200 text-zinc-500 whitespace-nowrap">Cejas 15 min</span>
             </div>
           </div>
-          <div className="bg-indigo-50 p-2.5">
+          <div className="bg-red-50 p-2.5">
             <div className="grid grid-cols-3 gap-1.5">
               {['9:00','9:30','10:00','10:30','11:00','11:30'].map(t => (
                 <div

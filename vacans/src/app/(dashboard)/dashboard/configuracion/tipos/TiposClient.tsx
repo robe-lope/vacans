@@ -16,7 +16,7 @@ type Tipo = {
 
 const DURACIONES = [10, 15, 20, 30, 45, 60, 90, 120]
 const COLORES = [
-  '#6366f1', '#8b5cf6', '#ec4899', '#f43f5e',
+  '#CC0000', '#8b5cf6', '#ec4899', '#f43f5e',
   '#f59e0b', '#10b981', '#3b82f6', '#64748b',
 ]
 
@@ -63,7 +63,7 @@ export default function TiposClient({ tipos, plan }: { tipos: Tipo[]; plan: stri
             <div key={tipo.id} className="flex items-center gap-3 px-4 py-3">
               <div
                 className="w-3 h-3 rounded-full flex-shrink-0"
-                style={{ backgroundColor: tipo.color ?? '#6366f1' }}
+                style={{ backgroundColor: tipo.color ?? '#CC0000' }}
               />
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-zinc-800">{tipo.nombre}</p>
@@ -92,9 +92,9 @@ export default function TiposClient({ tipos, plan }: { tipos: Tipo[]; plan: stri
 
       {/* Upgrade banner */}
       {atLimit && (
-        <div className="bg-indigo-50 border border-indigo-100 rounded-2xl p-4 text-sm text-indigo-700">
+        <div className="bg-red-50 border border-red-100 rounded-2xl p-4 text-sm text-red-700">
           <p className="font-medium">Límite del plan gratuito</p>
-          <p className="mt-0.5 text-indigo-600 text-xs">
+          <p className="mt-0.5 text-red-600 text-xs">
             Tenés 2 tipos activos. Contactanos para hacer upgrade a premium y agregar más.
           </p>
         </div>
@@ -104,7 +104,7 @@ export default function TiposClient({ tipos, plan }: { tipos: Tipo[]; plan: stri
       {!atLimit && !showForm && (
         <button
           onClick={() => setShowForm(true)}
-          className="flex items-center gap-2 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
+          className="flex items-center gap-2 text-sm font-medium text-red-600 hover:text-red-700 transition-colors"
         >
           <Plus className="w-4 h-4" />
           Agregar tipo de turno
@@ -122,7 +122,7 @@ export default function TiposClient({ tipos, plan }: { tipos: Tipo[]; plan: stri
                 name="nombre"
                 required
                 placeholder="Depilación definitiva"
-                className="w-full px-3 py-2 rounded-xl border border-zinc-200 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition"
+                className="w-full px-3 py-2 rounded-xl border border-zinc-200 text-sm outline-none focus:border-red-400 focus:ring-2 focus:ring-red-100 transition"
               />
             </div>
             <div>
@@ -130,7 +130,7 @@ export default function TiposClient({ tipos, plan }: { tipos: Tipo[]; plan: stri
               <select
                 name="duracion_mins"
                 required
-                className="w-full px-3 py-2 rounded-xl border border-zinc-200 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition bg-white"
+                className="w-full px-3 py-2 rounded-xl border border-zinc-200 text-sm outline-none focus:border-red-400 focus:ring-2 focus:ring-red-100 transition bg-white"
               >
                 {DURACIONES.map(d => (
                   <option key={d} value={d}>{d} min</option>
@@ -142,7 +142,7 @@ export default function TiposClient({ tipos, plan }: { tipos: Tipo[]; plan: stri
               <input
                 name="precio_display"
                 placeholder="$5.000"
-                className="w-full px-3 py-2 rounded-xl border border-zinc-200 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition"
+                className="w-full px-3 py-2 rounded-xl border border-zinc-200 text-sm outline-none focus:border-red-400 focus:ring-2 focus:ring-red-100 transition"
               />
             </div>
             <div className="col-span-2">
@@ -150,7 +150,7 @@ export default function TiposClient({ tipos, plan }: { tipos: Tipo[]; plan: stri
               <input
                 name="descripcion"
                 placeholder="Breve descripción del servicio"
-                className="w-full px-3 py-2 rounded-xl border border-zinc-200 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition"
+                className="w-full px-3 py-2 rounded-xl border border-zinc-200 text-sm outline-none focus:border-red-400 focus:ring-2 focus:ring-red-100 transition"
               />
             </div>
             <div className="col-span-2">
@@ -179,7 +179,7 @@ export default function TiposClient({ tipos, plan }: { tipos: Tipo[]; plan: stri
             <button
               type="submit"
               disabled={isPending}
-              className="bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white text-sm font-medium px-4 py-2 rounded-xl transition"
+              className="bg-red-600 hover:bg-red-700 disabled:opacity-60 text-white text-sm font-medium px-4 py-2 rounded-xl transition"
             >
               {isPending ? 'Guardando…' : 'Crear'}
             </button>

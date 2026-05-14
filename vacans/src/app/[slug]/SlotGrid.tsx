@@ -30,17 +30,17 @@ function computeColorVars(hex: string): React.CSSProperties {
   const r = parseInt(h.slice(0, 2), 16)
   const g = parseInt(h.slice(2, 4), 16)
   const b = parseInt(h.slice(4, 6), 16)
-  const blend = (ratio: number) =>
-    `rgb(${Math.round(r + (255 - r) * ratio)},${Math.round(g + (255 - g) * ratio)},${Math.round(b + (255 - b) * ratio)})`
-  const darken = (ratio: number) =>
-    `rgb(${Math.round(r * ratio)},${Math.round(g * ratio)},${Math.round(b * ratio)})`
+  const toHex = (v: number) => v.toString(16).padStart(2, '0')
+  const light = `#${toHex(Math.min(255, r + 51))}${toHex(Math.min(255, g + 51))}${toHex(Math.min(255, b + 51))}`
+  const dark  = `#${toHex(Math.max(0, r - 51))}${toHex(Math.max(0, g - 51))}${toHex(Math.max(0, b - 51))}`
   return {
-    '--primary':     hex.startsWith('#') ? hex : `#${hex}`,
-    '--primary-light': blend(0.6),
-    '--primary-dark':  darken(0.7),
-    '--primary-bg':    blend(0.95),
+    '--primary':       hex.startsWith('#') ? hex : `#${hex}`,
+    '--primary-light': light,
+    '--primary-dark':  dark,
+    '--primary-bg':    '#fafafa',
     '--primary-10':    `rgba(${r},${g},${b},0.1)`,
     '--primary-20':    `rgba(${r},${g},${b},0.2)`,
+    '--glow':          `rgba(${r},${g},${b},0.35)`,
     '--text':          '#18181b',
     '--text-muted':    '#71717a',
     '--text-light':    '#a1a1aa',
@@ -131,6 +131,7 @@ export default function SlotGrid({ profesional, tiposTurno, slotsByTipo, fechaDe
               width: 52, height: 52,
               background: `linear-gradient(135deg, var(--primary), var(--primary-dark))`,
               border: '2px solid var(--primary-light)',
+              boxShadow: '0 0 16px var(--glow)',
             }}
           >
             {profesional.foto_url
@@ -153,7 +154,7 @@ export default function SlotGrid({ profesional, tiposTurno, slotsByTipo, fechaDe
           {/* Badge */}
           <span
             className="text-[10px] font-semibold tracking-widest uppercase px-2 py-1 rounded-full flex-shrink-0"
-            style={{ color: 'var(--primary)', background: 'var(--primary-10)' }}
+            style={{ color: 'var(--primary)', background: 'var(--primary-10)', boxShadow: '0 0 10px var(--glow)' }}
           >
             vacans
           </span>
@@ -261,7 +262,7 @@ export default function SlotGrid({ profesional, tiposTurno, slotsByTipo, fechaDe
                   style={{
                     background:   'var(--surface)',
                     border:       `1.5px solid ${active ? 'var(--primary)' : 'var(--border)'}`,
-                    boxShadow:    active ? '0 0 0 2.5px var(--primary)' : undefined,
+                    boxShadow:    active ? '0 0 0 2.5px var(--primary), 0 0 16px var(--glow)' : undefined,
                     borderRadius: 'var(--radius)',
                     padding:      '18px 10px',
                   }}
@@ -331,7 +332,7 @@ export default function SlotGrid({ profesional, tiposTurno, slotsByTipo, fechaDe
           style={{ color: 'var(--text-light)', textDecoration: 'none' }}
         >
           Gestionado con{' '}
-          <span style={{ fontWeight: 600, color: 'var(--primary)' }}>vacans</span>
+          <span style={{ fontWeight: 600, color: 'var(--primary)', textShadow: '0 0 10px var(--glow)' }}>vacans</span>
           {' '}· Creá tu página gratis
         </a>
       </footer>

@@ -96,7 +96,7 @@ export default async function DashboardPage() {
           <h2 className="text-xs font-semibold uppercase tracking-widest text-zinc-400">
             Próximos confirmados
           </h2>
-          <Link href="/dashboard/turnos" className="text-xs text-indigo-600 hover:underline">
+          <Link href="/dashboard/turnos" className="text-xs text-red-600 hover:underline">
             Ver todos
           </Link>
         </div>
@@ -126,11 +126,11 @@ export default async function DashboardPage() {
 
       {/* Setup prompts */}
       {!profesional && (
-        <div className="bg-indigo-50 border border-indigo-100 rounded-2xl p-5 text-center">
-          <p className="text-sm font-medium text-indigo-800 mb-2">Completá tu perfil para empezar</p>
+        <div className="bg-red-50 border border-red-100 rounded-2xl p-5 text-center">
+          <p className="text-sm font-medium text-red-800 mb-2">Completá tu perfil para empezar</p>
           <Link
             href="/dashboard/configuracion/perfil"
-            className="text-sm text-indigo-600 font-medium hover:underline"
+            className="text-sm text-red-600 font-medium hover:underline"
           >
             Ir a configuración →
           </Link>

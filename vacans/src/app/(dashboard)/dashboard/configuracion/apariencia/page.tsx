@@ -15,8 +15,8 @@ export default async function AparienciaPage() {
 
   return (
     <AparienciaClient
-      initialPrimary={profesional?.color_primario ?? '#6366f1'}
-      initialAccent={profesional?.color_acento   ?? '#f59e0b'}
+      initialPrimary={profesional?.color_primario ?? '#CC0000'}
+      initialAccent={profesional?.color_acento   ?? '#FF3333'}
       nombreNegocio={profesional?.nombre_negocio ?? 'Mi Negocio'}
     />
   )

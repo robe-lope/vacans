@@ -54,7 +54,7 @@ export default function PerfilForm({ profesional }: { profesional: Profesional }
           required
           defaultValue={profesional?.nombre_negocio}
           placeholder="María Depilación"
-          className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition"
+          className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 text-sm outline-none focus:border-red-400 focus:ring-2 focus:ring-red-100 transition"
         />
       </div>
 
@@ -68,13 +68,13 @@ export default function PerfilForm({ profesional }: { profesional: Profesional }
           maxLength={120}
           rows={2}
           placeholder="Depilación definitiva · Flores, CABA"
-          className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition resize-none"
+          className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 text-sm outline-none focus:border-red-400 focus:ring-2 focus:ring-red-100 transition resize-none"
         />
       </div>
 
       <div>
         <label className="block text-sm font-medium text-zinc-700 mb-1.5">Tu link de Vacans</label>
-        <div className="flex items-center border border-zinc-200 rounded-xl overflow-hidden focus-within:border-indigo-400 focus-within:ring-2 focus-within:ring-indigo-100 transition">
+        <div className="flex items-center border border-zinc-200 rounded-xl overflow-hidden focus-within:border-red-400 focus-within:ring-2 focus-within:ring-red-100 transition">
           <span className="px-3 py-2.5 text-sm text-zinc-400 bg-zinc-50 border-r border-zinc-200 whitespace-nowrap">
             vacans.vercel.app/
           </span>
@@ -91,7 +91,7 @@ export default function PerfilForm({ profesional }: { profesional: Profesional }
 
       <div>
         <label className="block text-sm font-medium text-zinc-700 mb-1.5">Teléfono WhatsApp</label>
-        <div className="flex items-center border border-zinc-200 rounded-xl overflow-hidden focus-within:border-indigo-400 focus-within:ring-2 focus-within:ring-indigo-100 transition">
+        <div className="flex items-center border border-zinc-200 rounded-xl overflow-hidden focus-within:border-red-400 focus-within:ring-2 focus-within:ring-red-100 transition">
           <span className="px-3 py-2.5 text-sm text-zinc-400 bg-zinc-50 border-r border-zinc-200">+</span>
           <input
             name="telefono_wa"
@@ -117,7 +117,7 @@ export default function PerfilForm({ profesional }: { profesional: Profesional }
       <button
         type="submit"
         disabled={isPending || !!slugError}
-        className="bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white text-sm font-medium px-5 py-2.5 rounded-xl transition"
+        className="bg-red-600 hover:bg-red-700 disabled:opacity-60 text-white text-sm font-medium px-5 py-2.5 rounded-xl transition"
       >
         {isPending ? 'Guardando…' : 'Guardar cambios'}
       </button>

@@ -76,7 +76,7 @@ export async function createTipoTurno(formData: FormData): Promise<ActionResult>
     duracion_mins:  parseInt(formData.get('duracion_mins') as string, 10),
     descripcion:    (formData.get('descripcion') as string).trim() || null,
     precio_display: (formData.get('precio_display') as string).trim() || null,
-    color:          (formData.get('color') as string) || '#6366f1',
+    color:          (formData.get('color') as string) || '#CC0000',
   })
 
   if (error) return { error: error.message }

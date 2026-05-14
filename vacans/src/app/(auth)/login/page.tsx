@@ -35,7 +35,7 @@ export default function LoginPage() {
               required
               autoComplete="email"
               placeholder="tu@email.com"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 text-sm outline-none focus:border-red-400 focus:ring-2 focus:ring-red-100 transition"
             />
           </div>
 
@@ -47,7 +47,7 @@ export default function LoginPage() {
               required
               autoComplete="current-password"
               placeholder="••••••••"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 text-sm outline-none focus:border-red-400 focus:ring-2 focus:ring-red-100 transition"
             />
           </div>
 
@@ -60,7 +60,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={isPending}
-            className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-medium text-sm rounded-xl py-2.5 transition"
+            className="w-full bg-red-600 hover:bg-red-700 disabled:opacity-60 text-white font-medium text-sm rounded-xl py-2.5 transition"
           >
             {isPending ? 'Ingresando…' : 'Ingresar'}
           </button>
@@ -69,7 +69,7 @@ export default function LoginPage() {
 
       <p className="text-center text-sm text-zinc-500 mt-5">
         ¿No tenés cuenta?{' '}
-        <Link href="/register" className="text-indigo-600 font-medium hover:underline">
+        <Link href="/register" className="text-red-600 font-medium hover:underline">
           Registrarte
         </Link>
       </p>

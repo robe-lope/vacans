@@ -4,6 +4,7 @@ import { useState, useTransition } from 'react'
 import { updateApariencia } from '../actions'
 
 const PRESETS = [
+  { label: 'Rosso Corsa',     primary: '#CC0000', accent: '#FF3333' },
   { label: 'Violeta Spa',     primary: '#7c3aed', accent: '#f0abfc' },
   { label: 'Verde Natura',    primary: '#16a34a', accent: '#bbf7d0' },
   { label: 'Azul Clínica',    primary: '#2563eb', accent: '#93c5fd' },
@@ -17,14 +18,16 @@ function computeVars(hex: string): React.CSSProperties {
   const r = parseInt(h.slice(0, 2), 16)
   const g = parseInt(h.slice(2, 4), 16)
   const b = parseInt(h.slice(4, 6), 16)
-  const blend  = (ratio: number) => `rgb(${Math.round(r+(255-r)*ratio)},${Math.round(g+(255-g)*ratio)},${Math.round(b+(255-b)*ratio)})`
-  const darken = (ratio: number) => `rgb(${Math.round(r*ratio)},${Math.round(g*ratio)},${Math.round(b*ratio)})`
+  const toHex = (v: number) => v.toString(16).padStart(2, '0')
+  const light = `#${toHex(Math.min(255, r + 51))}${toHex(Math.min(255, g + 51))}${toHex(Math.min(255, b + 51))}`
+  const dark  = `#${toHex(Math.max(0, r - 51))}${toHex(Math.max(0, g - 51))}${toHex(Math.max(0, b - 51))}`
   return {
-    '--primary':      hex,
-    '--primary-light': blend(0.6),
-    '--primary-dark':  darken(0.7),
-    '--primary-bg':    blend(0.95),
+    '--primary':       hex,
+    '--primary-light': light,
+    '--primary-dark':  dark,
+    '--primary-bg':    '#fafafa',
     '--primary-10':    `rgba(${r},${g},${b},0.1)`,
+    '--glow':          `rgba(${r},${g},${b},0.35)`,
   } as React.CSSProperties
 }
 
@@ -238,7 +241,8 @@ export default function AparienciaClient({ initialPrimary, initialAccent, nombre
       <button
         onClick={handleSave}
         disabled={pending}
-        className="w-full py-3 rounded-xl bg-zinc-900 text-white font-medium text-sm hover:bg-zinc-700 disabled:opacity-50 transition-colors"
+        className="w-full py-3 rounded-xl bg-[#CC0000] text-white font-medium text-sm hover:bg-[#990000] disabled:opacity-50 transition-colors"
+        style={{ boxShadow: '0 4px 14px rgba(204,0,0,0.35)' }}
       >
         {pending ? 'Guardando…' : 'Guardar cambios'}
       </button>

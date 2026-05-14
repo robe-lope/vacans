@@ -77,7 +77,7 @@ export default async function TurnosPage({ searchParams }: { searchParams: Searc
               className={[
                 'px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap border transition-colors',
                 active
-                  ? 'bg-indigo-600 text-white border-indigo-600'
+                  ? 'bg-red-600 text-white border-red-600'
                   : 'text-zinc-500 border-zinc-200 hover:border-zinc-300 hover:text-zinc-700',
               ].join(' ')}
             >

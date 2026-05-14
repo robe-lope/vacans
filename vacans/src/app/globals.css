@@ -16,11 +16,14 @@
 
 @layer base {
   :root {
-    --background: #ffffff;
+    --background: #fafafa;
     --foreground: #18181b;
     --border: #e4e4e7;
     --ring: #a1a1aa;
     --radius: 0.625rem;
+    --brand: #CC0000;
+    --brand-dark: #990000;
+    --brand-10: rgba(204,0,0,0.1);
   }
 
   * {

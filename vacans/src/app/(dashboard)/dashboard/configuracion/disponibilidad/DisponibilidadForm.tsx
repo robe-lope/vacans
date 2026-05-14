@@ -75,7 +75,7 @@ export default function DisponibilidadForm({ initialDias, tipos }: Props) {
                 type="button"
                 onClick={() => updateDia(idx, { activo: !dia.activo })}
                 className={`w-10 h-5 rounded-full transition-colors flex-shrink-0 relative ${
-                  dia.activo ? 'bg-indigo-600' : 'bg-zinc-200'
+                  dia.activo ? 'bg-red-600' : 'bg-zinc-200'
                 }`}
               >
                 <span
@@ -95,14 +95,14 @@ export default function DisponibilidadForm({ initialDias, tipos }: Props) {
                     type="time"
                     value={dia.hora_inicio}
                     onChange={e => updateDia(idx, { hora_inicio: e.target.value })}
-                    className="px-2 py-1 rounded-lg border border-zinc-200 text-sm outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-100 transition"
+                    className="px-2 py-1 rounded-lg border border-zinc-200 text-sm outline-none focus:border-red-400 focus:ring-1 focus:ring-red-100 transition"
                   />
                   <span className="text-zinc-400 text-sm">–</span>
                   <input
                     type="time"
                     value={dia.hora_fin}
                     onChange={e => updateDia(idx, { hora_fin: e.target.value })}
-                    className="px-2 py-1 rounded-lg border border-zinc-200 text-sm outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-100 transition"
+                    className="px-2 py-1 rounded-lg border border-zinc-200 text-sm outline-none focus:border-red-400 focus:ring-1 focus:ring-red-100 transition"
                   />
                 </div>
               )}
@@ -145,7 +145,7 @@ export default function DisponibilidadForm({ initialDias, tipos }: Props) {
       <button
         type="submit"
         disabled={isPending}
-        className="bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white text-sm font-medium px-5 py-2.5 rounded-xl transition"
+        className="bg-red-600 hover:bg-red-700 disabled:opacity-60 text-white text-sm font-medium px-5 py-2.5 rounded-xl transition"
       >
         {isPending ? 'Guardando…' : 'Guardar horarios'}
       </button>
