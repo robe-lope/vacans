@@ -198,13 +198,15 @@ export default function SlotGrid({ profesional, tiposTurno, slotsByTipo, fechaDe
             return (
               <button
                 key={i}
-                onClick={() => handleDayClick(i)}
+                onClick={() => hasSlots && handleDayClick(i)}
                 className="relative flex flex-col items-center rounded-xl border-[1.5px] flex-shrink-0"
                 style={{
                   minWidth: 54, padding: '10px 12px',
                   background:   active ? 'var(--primary)' : 'var(--surface)',
                   borderColor:  active ? 'var(--primary)' : 'var(--border)',
-                  color:        active ? 'white' : 'var(--text)',
+                  color:        active ? 'white' : hasSlots ? 'var(--text)' : 'var(--text-light)',
+                  cursor:       hasSlots ? 'pointer' : 'not-allowed',
+                  opacity:      hasSlots ? 1 : 0.45,
                   gap: 4,
                 }}
               >
