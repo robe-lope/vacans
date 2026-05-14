@@ -1,18 +1,11 @@
 import type { Metadata } from "next"
-import { DM_Sans, DM_Serif_Display } from "next/font/google"
+import { Nunito } from "next/font/google"
 import "./globals.css"
 
-const dmSans = DM_Sans({
+const nunito = Nunito({
   subsets: ['latin'],
   variable: '--font-sans',
-  weight: ['300', '400', '500', '600'],
-})
-
-const dmSerif = DM_Serif_Display({
-  subsets: ['latin'],
-  variable: '--font-serif',
-  weight: '400',
-  style: ['normal', 'italic'],
+  weight: ['400', '500', '600', '700'],
 })
 
 export const metadata: Metadata = {
@@ -22,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" className={`${dmSans.variable} ${dmSerif.variable}`}>
+    <html lang="es" className={nunito.variable}>
       <body className="font-sans antialiased">
         {children}
       </body>

@@ -126,7 +126,7 @@ export default function LandingPage() {
                 <div
                   key={t}
                   className="bg-white rounded-lg text-center py-2 text-[11px] font-semibold text-zinc-800 border border-zinc-100"
-                  style={{ fontFamily: 'var(--font-serif, Georgia)' }}
+                  style={{ fontFamily: 'var(--font-sans, system-ui)' }}
                 >
                   {t}
                 </div>

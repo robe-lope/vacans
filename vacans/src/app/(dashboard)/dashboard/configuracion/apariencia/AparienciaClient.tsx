@@ -223,7 +223,7 @@ export default function AparienciaClient({ initialPrimary, initialAccent, nombre
                     background: 'white',
                     border: '1px solid #e4e4e7',
                     color: '#18181b',
-                    fontFamily: 'var(--font-serif, Georgia)',
+                    fontFamily: 'var(--font-sans, system-ui)',
                   }}
                 >
                   {t}
