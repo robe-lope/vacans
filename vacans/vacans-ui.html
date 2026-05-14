@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vacans — María Depilación</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* === VARIABLES DEL PROFESIONAL (se generan dinámicamente) === */
+  :root {
+    --primary: #c026d3;
+    --primary-light: #f0abfc;
+    --primary-dark: #86198f;
+    --primary-bg: #fdf4ff;
+    --primary-10: rgba(192, 38, 211, 0.1);
+    --primary-20: rgba(192, 38, 211, 0.2);
+    --text: #18181b;
+    --text-muted: #71717a;
+    --text-light: #a1a1aa;
+    --surface: #ffffff;
+    --surface-2: #fafafa;
+    --border: #e4e4e7;
+    --radius: 14px;
+    --radius-sm: 8px;
+    --radius-lg: 20px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--primary-bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 100px;
+  }
+
+  /* === HEADER === */
+  .header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 16px 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 1px 12px rgba(0,0,0,0.06);
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: white;
+    flex-shrink: 0;
+    border: 2px solid var(--primary-light);
+  }
+
+  .header-info h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .header-info p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 2px;
+    font-weight: 300;
+  }
+
+  .badge-vacans {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--primary);
+    background: var(--primary-10);
+    padding: 4px 8px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+
+  /* === TABS DE TIPO DE TURNO === */
+  .tipo-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 14px;
+    scrollbar-width: none;
+  }
+  .tipo-tabs::-webkit-scrollbar { display: none; }
+
+  .tipo-tab {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 30px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: all 0.2s;
+  }
+
+  .tipo-tab.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+  }
+
+  .tipo-tab .duracion {
+    font-size: 11px;
+    opacity: 0.75;
+  }
+
+  .tipo-tab .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.6;
+  }
+
+  /* === SELECTOR DE DÍAS === */
+  .days-section {
+    padding: 20px 16px 0;
+  }
+
+  .days-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 12px;
+  }
+
+  .days-scroll {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+  .days-scroll::-webkit-scrollbar { display: none; }
+
+  .day-chip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    cursor: pointer;
+    min-width: 54px;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .day-chip:hover {
+    border-color: var(--primary-light);
+    background: var(--primary-bg);
+  }
+
+  .day-chip.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+  }
+
+  .day-chip.has-slots::after {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--primary);
+    position: absolute;
+    bottom: 6px;
+  }
+  .day-chip { position: relative; }
+  .day-chip.active::after { background: white; }
+
+  .day-name {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    opacity: 0.65;
+  }
+  .day-chip.active .day-name { opacity: 0.85; }
+
+  .day-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  /* === SLOTS === */
+  .slots-section {
+    padding: 24px 16px 0;
+  }
+
+  .slots-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .slots-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--text);
+  }
+
+  .slots-count {
+    font-size: 12px;
+    color: var(--text-muted);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  .slots-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .slot-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .slot-card:hover {
+    border-color: var(--primary-light);
+    box-shadow: 0 4px 16px var(--primary-10);
+  }
+
+  /* Overlay oscuro "reservar" al seleccionar */
+  .slot-card .slot-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.72);
+    border-radius: calc(var(--radius) - 2px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    opacity: 0;
+    transform: scale(0.92);
+    transition: all 0.2s cubic-bezier(0.34, 1.3, 0.64, 1);
+    pointer-events: none;
+  }
+
+  .slot-card.selected {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2.5px var(--primary);
+  }
+
+  .slot-card.selected .slot-overlay {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: all;
+  }
+
+  .slot-overlay-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .slot-overlay svg {
+    width: 20px;
+    height: 20px;
+    fill: #25d366;
+    filter: drop-shadow(0 0 6px rgba(37,211,102,0.5));
+  }
+
+  .slot-time {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--text);
+    line-height: 1;
+    transition: color 0.2s;
+  }
+
+  .slot-period {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 3px;
+  }
+
+  /* === EMPTY STATE === */
+  .empty-state {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--text-muted);
+  }
+
+  .empty-state .icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+    opacity: 0.4;
+  }
+
+  .empty-state p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* === FOOTER VACANS === */
+  .vacans-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 10px;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    z-index: 5;
+  }
+
+  .vacans-footer a {
+    font-size: 12px;
+    color: var(--text-light);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  .vacans-footer a span {
+    font-weight: 600;
+    color: var(--primary);
+  }
+
+  /* === DEMO CONTROLS === */
+  .demo-bar {
+    background: #18181b;
+    color: white;
+    padding: 10px 16px;
+    font-size: 11px;
+    text-align: center;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+
+  .demo-bar strong { color: var(--primary-light); }
+
+  .color-switcher {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    padding: 12px 16px;
+    background: #27272a;
+    flex-wrap: wrap;
+  }
+
+  .color-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .color-btn:hover, .color-btn.active {
+    border-color: white;
+    transform: scale(1.15);
+  }
+
+</style>
+</head>
+<body>
+
+<!-- Demo bar -->
+<div class="demo-bar">
+  🎨 <strong>DEMO</strong> — Cambiá la paleta para ver la personalización
+</div>
+<div class="color-switcher">
+  <div class="color-btn active" style="background:#c026d3" onclick="setColor('#c026d3','#f0abfc','#86198f','#fdf4ff')" title="Violeta Spa"></div>
+  <div class="color-btn" style="background:#16a34a" onclick="setColor('#16a34a','#bbf7d0','#15803d','#f0fdf4')" title="Verde Natura"></div>
+  <div class="color-btn" style="background:#2563eb" onclick="setColor('#2563eb','#93c5fd','#1d4ed8','#eff6ff')" title="Azul Clínica"></div>
+  <div class="color-btn" style="background:#db2777" onclick="setColor('#db2777','#fbcfe8','#be185d','#fdf2f8')" title="Rosa Estética"></div>
+  <div class="color-btn" style="background:#ea580c" onclick="setColor('#ea580c','#fed7aa','#c2410c','#fff7ed')" title="Naranja Energía"></div>
+  <div class="color-btn" style="background:#374151" onclick="setColor('#374151','#d1d5db','#1f2937','#f9fafb')" title="Negro Minimal"></div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-top">
+    <div class="avatar">M</div>
+    <div class="header-info">
+      <h1>María Depilación</h1>
+      <p>Depilación definitiva · Flores, CABA</p>
+    </div>
+    <div class="badge-vacans">vacans</div>
+  </div>
+
+  <!-- Tabs tipos de turno -->
+  <div class="tipo-tabs">
+    <button class="tipo-tab active" onclick="selectTipo(this, 'definitiva')">
+      <span class="dot"></span>
+      Definitiva
+      <span class="duracion">30 min</span>
+    </button>
+    <button class="tipo-tab" onclick="selectTipo(this, 'cejas')">
+      <span class="dot"></span>
+      Cejas
+      <span class="duracion">15 min</span>
+    </button>
+  </div>
+</header>
+
+<!-- DÍAS -->
+<section class="days-section">
+  <div class="days-label">Días disponibles</div>
+  <div class="days-scroll" id="daysScroll"></div>
+</section>
+
+<!-- SLOTS -->
+<section class="slots-section">
+  <div class="slots-header">
+    <div class="slots-title" id="slotsTitle">Martes 20 de mayo</div>
+    <div class="slots-count" id="slotsCount">8 turnos</div>
+  </div>
+  <div class="slots-grid" id="slotsGrid"></div>
+</section>
+
+<!-- FOOTER -->
+<div class="vacans-footer">
+  <a href="https://vacans.xyz">
+    Gestionado con <span>vacans</span> · Creá tu página gratis
+  </a>
+</div>
+
+<script>
+  // === DATA MOCK ===
+  const slotsByDay = {
+    0: ['09:00','09:30','10:00','10:30','11:00','11:30','15:00','15:30','16:00','16:30'],
+    1: ['09:00','10:00','10:30','11:30','14:00','14:30','17:00'],
+    2: [],
+    3: ['09:00','09:30','10:00','11:00','15:00','15:30','16:00','16:30','17:00'],
+    4: ['09:30','10:00','10:30'],
+    5: ['10:00','10:30','11:00','11:30','14:00','14:30','15:00','17:00','17:30'],
+    6: ['09:00','09:30'],
+    7: [],
+    8: ['09:00','09:30','10:00','10:30','11:00','15:00','15:30'],
+    9: ['10:00','11:00','14:30','15:00','16:00'],
+    10: ['09:00','09:30','10:00'],
+    11: ['09:00','10:00','10:30','11:00','14:00','15:00','15:30','16:00','17:00'],
+    12: [],
+    13: ['09:30','10:00','10:30','11:00'],
+  };
+
+  const dayNames = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  const monthNames = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const fullDayNames = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+
+  let selectedDay = 1;
+  let selectedSlot = null;
+  let selectedTipo = 'definitiva';
+
+  // === GENERAR DÍAS ===
+  function renderDays() {
+    const container = document.getElementById('daysScroll');
+    container.innerHTML = '';
+    const today = new Date();
+
+    for (let i = 0; i < 14; i++) {
+      const d = new Date(today);
+      d.setDate(today.getDate() + i);
+      const dow = d.getDay();
+      const slots = slotsByDay[i];
+      const hasSlots = slots && slots.length > 0;
+
+      const chip = document.createElement('div');
+      chip.className = `day-chip${i === selectedDay ? ' active' : ''}${hasSlots ? ' has-slots' : ''}`;
+      chip.innerHTML = `
+        <span class="day-name">${dayNames[dow]}</span>
+        <span class="day-num">${d.getDate()}</span>
+      `;
+      chip.onclick = () => selectDay(i, d);
+      container.appendChild(chip);
+    }
+  }
+
+  function selectDay(idx, date) {
+    selectedDay = idx;
+    selectedSlot = null;
+    document.querySelectorAll('.day-chip').forEach((c,i) => {
+      c.classList.toggle('active', i === idx);
+    });
+    const dow = date.getDay();
+    const title = `${fullDayNames[dow].charAt(0).toUpperCase() + fullDayNames[dow].slice(1)} ${date.getDate()} de ${monthNames[date.getMonth()]}`;
+    document.getElementById('slotsTitle').textContent = title;
+    renderSlots(idx);
+  }
+
+  // === GENERAR SLOTS ===
+  function renderSlots(dayIdx) {
+    const grid = document.getElementById('slotsGrid');
+    const slots = slotsByDay[dayIdx] || [];
+    document.getElementById('slotsCount').textContent = `${slots.length} turno${slots.length !== 1 ? 's' : ''}`;
+
+    if (slots.length === 0) {
+      grid.innerHTML = `
+        <div class="empty-state" style="grid-column:1/-1">
+          <div class="icon">🗓</div>
+          <p>No hay turnos disponibles<br>este día. Probá con otro.</p>
+        </div>`;
+      return;
+    }
+
+    const waIcon = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>`;
+
+    grid.innerHTML = slots.map(time => {
+      const [h] = time.split(':');
+      const period = parseInt(h) < 12 ? 'AM' : 'PM';
+      return `
+        <div class="slot-card" onclick="selectSlot(this, '${time}')">
+          <div class="slot-time">${time}</div>
+          <div class="slot-period">${period}</div>
+          <div class="slot-overlay" onclick="reservar(event, '${time}')">
+            ${waIcon}
+            <span class="slot-overlay-label">reservar</span>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  function selectSlot(el, time) {
+    document.querySelectorAll('.slot-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedSlot = time;
+  }
+
+  // Deseleccionar al tocar fuera de cualquier slot
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.slot-card')) {
+      document.querySelectorAll('.slot-card').forEach(c => c.classList.remove('selected'));
+      selectedSlot = null;
+    }
+  });
+
+  function reservar(event, time) {
+    event.stopPropagation(); // no propagar al selectSlot
+
+    const today = new Date();
+    const d = new Date(today);
+    d.setDate(today.getDate() + selectedDay);
+    const dow = d.getDay();
+    const fechaStr = `${fullDayNames[dow].charAt(0).toUpperCase() + fullDayNames[dow].slice(1)} ${d.getDate()} de ${monthNames[d.getMonth()]}`;
+    const tipoLabel = selectedTipo === 'definitiva' ? 'Depilación definitiva (30 min)' : 'Cejas (15 min)';
+    const negocio = 'María Depilación';
+    const telProfesional = '5491112345678'; // viene del profesional
+
+    const mensaje = encodeURIComponent(
+      `Hola ${negocio}! 👋 Quiero reservar el siguiente turno:\n\n` +
+      `📅 *${fechaStr}* a las *${time}*\n` +
+      `✂️ *${tipoLabel}*\n\n` +
+      `_Enviado desde vacans.xyz_`
+    );
+
+    // En demo abrimos alert, en prod: window.open(`https://wa.me/${telProfesional}?text=${mensaje}`, '_blank')
+    alert(`✅ En la app real esto abre WhatsApp con el mensaje pre-armado para ${negocio}.\n\n📅 ${fechaStr} a las ${time}\n✂️ ${tipoLabel}`);
+  }
+
+  // === COLOR SWITCHER ===
+  function setColor(primary, light, dark, bg) {
+    const root = document.documentElement;
+    root.style.setProperty('--primary', primary);
+    root.style.setProperty('--primary-light', light);
+    root.style.setProperty('--primary-dark', dark);
+    root.style.setProperty('--primary-bg', bg);
+    root.style.setProperty('--primary-10', hexToRgba(primary, 0.1));
+    root.style.setProperty('--primary-20', hexToRgba(primary, 0.2));
+
+    document.querySelectorAll('.color-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.style.background === primary);
+    });
+  }
+
+  function hexToRgba(hex, alpha) {
+    const r = parseInt(hex.slice(1,3),16);
+    const g = parseInt(hex.slice(3,5),16);
+    const b = parseInt(hex.slice(5,7),16);
+    return `rgba(${r},${g},${b},${alpha})`;
+  }
+
+  // === INIT ===
+  renderDays();
+  const today = new Date();
+  const initDate = new Date(today);
+  initDate.setDate(today.getDate() + selectedDay);
+  const dow = initDate.getDay();
+  document.getElementById('slotsTitle').textContent =
+    `${fullDayNames[dow].charAt(0).toUpperCase() + fullDayNames[dow].slice(1)} ${initDate.getDate()} de ${monthNames[initDate.getMonth()]}`;
+  renderSlots(selectedDay);
+</script>
+</body>
+</html>
