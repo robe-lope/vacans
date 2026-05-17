@@ -24,7 +24,8 @@ function FacebookIcon() {
 export default function OAuthButtons() {
   const supabase = createClient()
 
-  async function signIn(provider: 'google' | 'facebook') {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async function _signIn(provider: 'google' | 'facebook') {
     await supabase.auth.signInWithOAuth({
       provider,
       options: { redirectTo: `${window.location.origin}/auth/callback` },
