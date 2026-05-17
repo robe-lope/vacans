@@ -4,10 +4,9 @@ import { useRef, useState, useEffect } from 'react'
 import { ImageDown, Copy, Check, X } from 'lucide-react'
 import TurnosStories from './TurnosStories'
 
-type DiaResumen = {
-  fecha: string
-  diaNombre: string
-  count: number
+type SlotHoy = {
+  hora: string
+  tipoNombre: string
 }
 
 type Props = {
@@ -17,15 +16,16 @@ type Props = {
     color_primario: string
     slug: string
   }
-  slotsResumen: DiaResumen[]
+  slots: SlotHoy[]
+  fechaHoy: string
 }
 
-export default function ShareStoriesButton({ profesional, slotsResumen }: Props) {
-  const ref                     = useRef<HTMLDivElement>(null)
-  const timerRef                = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const [loading, setLoading]   = useState(false)
+export default function ShareStoriesButton({ profesional, slots, fechaHoy }: Props) {
+  const ref                         = useRef<HTMLDivElement>(null)
+  const timerRef                    = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const [loading, setLoading]       = useState(false)
   const [showBanner, setShowBanner] = useState(false)
-  const [copied, setCopied]     = useState(false)
+  const [copied, setCopied]         = useState(false)
 
   const publicUrl = `vacans.vercel.app/${profesional.slug}`
 
@@ -135,7 +135,7 @@ export default function ShareStoriesButton({ profesional, slotsResumen }: Props)
         style={{ position: 'fixed', left: '-9999px', top: 0, pointerEvents: 'none' }}
         aria-hidden
       >
-        <TurnosStories profesional={profesional} slotsResumen={slotsResumen} />
+        <TurnosStories profesional={profesional} slots={slots} fechaHoy={fechaHoy} />
       </div>
     </div>
   )

@@ -69,17 +69,17 @@ export default async function DashboardPage() {
       })
     : {}
 
-  const nowUTC = new Date()
-  const slotsResumen = Array.from({ length: 7 }, (_, i) => {
-    const d = new Date(Date.UTC(nowUTC.getUTCFullYear(), nowUTC.getUTCMonth(), nowUTC.getUTCDate() + i))
-    const fecha = d.toISOString().slice(0, 10)
-    let count = 0
-    for (const byFecha of Object.values(slotsByTipo)) {
-      count += byFecha[fecha]?.length ?? 0
+  const slotsHoy: { hora: string; tipoNombre: string }[] = []
+  for (const [tipoId, byFecha] of Object.entries(slotsByTipo)) {
+    const tipoData = (tipos ?? []).find(t => t.id === tipoId)
+    if (!tipoData) continue
+    for (const hora of (byFecha[today] ?? [])) {
+      slotsHoy.push({ hora, tipoNombre: tipoData.nombre })
     }
-    const raw = d.toLocaleDateString('es-AR', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' })
-    return { fecha, diaNombre: raw.charAt(0).toUpperCase() + raw.slice(1), count }
-  })
+  }
+  slotsHoy.sort((a, b) => a.hora.localeCompare(b.hora))
+
+  const fechaHoy = new Date().toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' })
 
   const appUrl = (process.env.NEXT_PUBLIC_APP_URL ?? 'https://vacans.vercel.app').replace(/\/$/, '')
 
@@ -113,7 +113,8 @@ export default async function DashboardPage() {
                 color_primario: profesional.color_primario ?? '#CC0000',
                 slug: profesional.slug,
               }}
-              slotsResumen={slotsResumen}
+              slots={slotsHoy}
+              fechaHoy={fechaHoy}
             />
             <a
               href={`/${profesional.slug}`}

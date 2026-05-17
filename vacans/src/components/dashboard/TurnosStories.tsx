@@ -1,7 +1,6 @@
-type DiaResumen = {
-  fecha: string
-  diaNombre: string
-  count: number
+type SlotHoy = {
+  hora: string
+  tipoNombre: string
 }
 
 type Props = {
@@ -11,10 +10,11 @@ type Props = {
     color_primario: string
     slug: string
   }
-  slotsResumen: DiaResumen[]
+  slots: SlotHoy[]
+  fechaHoy: string
 }
 
-export default function TurnosStories({ profesional, slotsResumen }: Props) {
+export default function TurnosStories({ profesional, slots, fechaHoy }: Props) {
   const color   = profesional.color_primario || '#CC0000'
   const initial = profesional.nombre_negocio.charAt(0).toUpperCase()
 
@@ -55,43 +55,33 @@ export default function TurnosStories({ profesional, slotsResumen }: Props) {
             {profesional.nombre_negocio}
           </div>
           <div style={{ fontSize: 18, color: 'rgba(255,255,255,0.75)', marginTop: 6 }}>
-            Turnos disponibles esta semana
+            Turnos disponibles hoy · {fechaHoy}
           </div>
         </div>
       </div>
 
-      {/* Days */}
-      <div style={{ flex: 1, padding: '28px 32px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-        {slotsResumen.map(dia => (
+      {/* Slots */}
+      <div style={{ flex: 1, padding: '28px 32px', display: 'flex', flexWrap: 'wrap', gap: 10, alignContent: 'flex-start' }}>
+        {slots.map(slot => (
           <div
-            key={dia.fecha}
+            key={slot.hora}
             style={{
-              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-              padding: '15px 22px', borderRadius: 14,
-              background: dia.count > 0 ? 'white' : '#f4f4f5',
+              background: 'white',
               border: '1.5px solid #e4e4e7',
+              borderRadius: 12,
+              padding: '12px 20px',
+              display: 'flex', flexDirection: 'column', gap: 4,
             }}
           >
-            <span style={{
-              fontSize: 19, fontWeight: 600,
-              color: dia.count > 0 ? '#18181b' : '#a1a1aa',
-              textTransform: 'capitalize',
-            }}>
-              {dia.diaNombre}
-            </span>
-            {dia.count > 0 ? (
-              <span style={{
-                fontSize: 15, fontWeight: 600,
-                color: 'white', background: color,
-                padding: '5px 16px', borderRadius: 50,
-              }}>
-                {dia.count} {dia.count === 1 ? 'turno' : 'turnos'}
-              </span>
-            ) : (
-              <span style={{ fontSize: 15, color: '#a1a1aa' }}>Sin turnos</span>
-            )}
+            <span style={{ fontSize: 22, fontWeight: 700, color: '#18181b' }}>{slot.hora}</span>
+            <span style={{ fontSize: 13, color: '#71717a' }}>{slot.tipoNombre}</span>
           </div>
         ))}
+        {slots.length === 0 && (
+          <div style={{ fontSize: 18, color: '#a1a1aa', padding: '20px 0' }}>
+            Sin turnos disponibles hoy
+          </div>
+        )}
       </div>
 
       {/* Footer */}
