@@ -4,14 +4,15 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
-  LayoutDashboard, CalendarDays, User, CalendarCog,
+  LayoutDashboard, CalendarDays, Megaphone, User, CalendarCog,
   Clock, Palette, LogOut, Menu, X, ExternalLink,
 } from 'lucide-react'
 import { logout } from '@/app/(auth)/actions'
 
 const MAIN_NAV = [
-  { label: 'Inicio', href: '/dashboard', icon: LayoutDashboard },
-  { label: 'Turnos', href: '/dashboard/turnos', icon: CalendarDays },
+  { label: 'Inicio',        href: '/dashboard',       icon: LayoutDashboard },
+  { label: 'Turnos',        href: '/dashboard/turnos', icon: CalendarDays },
+  { label: 'Promo semanal', href: '/dashboard/promo',  icon: Megaphone },
 ]
 const CONFIG_NAV = [
   { label: 'Perfil', href: '/dashboard/configuracion/perfil', icon: User },

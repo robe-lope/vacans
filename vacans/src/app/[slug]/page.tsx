@@ -57,7 +57,7 @@ export default async function PublicPage({ params }: Props) {
   finUTC.setUTCDate(finUTC.getUTCDate() + 13)
   const hastaUTC = finUTC.toISOString().slice(0, 10)
 
-  const [tiposRes, dispRes, overridesRes, solicitRes] = await Promise.all([
+  const [tiposRes, dispRes, overridesRes, solicitRes, promoRes] = await Promise.all([
     supabase
       .from('tipos_turno')
       .select('*')
@@ -81,11 +81,20 @@ export default async function PublicPage({ params }: Props) {
       .eq('estado', 'confirmado')
       .gte('fecha', todayUTC)
       .lte('fecha', hastaUTC),
+    supabase
+      .from('promos')
+      .select('imagen_url')
+      .eq('profesional_id', profesional.id)
+      .gte('caduca_en', todayUTC)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle(),
   ])
 
   const tiposTurno = tiposRes.data ?? []
   const disponibilidad = dispRes.data ?? []
   const overrides = overridesRes.data ?? []
+  const promoUrl = promoRes.data?.imagen_url ?? null
   const solicitudesConfirmadas = (solicitRes.data ?? []).map(s => ({
     fecha: s.fecha,
     hora_inicio: s.hora_inicio,
@@ -114,6 +123,7 @@ export default async function PublicPage({ params }: Props) {
       tiposTurno={tiposTurno}
       slotsByTipo={slotsByTipo}
       fechaDesde={todayUTC}
+      promoUrl={promoUrl}
     />
   )
 }

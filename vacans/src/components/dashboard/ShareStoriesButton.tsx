@@ -34,6 +34,7 @@ export default function ShareStoriesButton({ profesional, slotsResumen }: Props)
         useCORS: true,
         allowTaint: false,
         backgroundColor: '#fafafa',
+        logging: true,
       })
 
       const blob = await new Promise<Blob>((resolve, reject) => {
@@ -72,7 +73,7 @@ export default function ShareStoriesButton({ profesional, slotsResumen }: Props)
       {/* Render target — off-screen, invisible, captured by html2canvas */}
       <div
         ref={ref}
-        style={{ position: 'fixed', left: '-9999px', top: 0, visibility: 'hidden', pointerEvents: 'none' }}
+        style={{ position: 'fixed', left: '-9999px', top: 0, opacity: 0, pointerEvents: 'none', zIndex: -1 }}
         aria-hidden
       >
         <TurnosStories profesional={profesional} slotsResumen={slotsResumen} />

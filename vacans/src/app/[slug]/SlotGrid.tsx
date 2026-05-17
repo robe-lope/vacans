@@ -23,6 +23,7 @@ type Props = {
   tiposTurno: TipoTurno[]
   slotsByTipo: SlotsByTipo
   fechaDesde: string // 'YYYY-MM-DD'
+  promoUrl: string | null
 }
 
 function computeColorVars(hex: string): React.CSSProperties {
@@ -62,7 +63,7 @@ function WaIcon() {
   )
 }
 
-export default function SlotGrid({ profesional, tiposTurno, slotsByTipo, fechaDesde }: Props) {
+export default function SlotGrid({ profesional, tiposTurno, slotsByTipo, fechaDesde, promoUrl }: Props) {
   const [selectedTipoId, setSelectedTipoId] = useState(tiposTurno[0]?.id ?? '')
   const [selectedDayIdx, setSelectedDayIdx]  = useState(0)
   const [selectedSlot, setSelectedSlot]       = useState<string | null>(null)
@@ -320,6 +321,18 @@ export default function SlotGrid({ profesional, tiposTurno, slotsByTipo, fechaDe
           </div>
         )}
       </section>
+
+      {/* ── PROMO SEMANAL ── */}
+      {promoUrl && (
+        <div style={{ padding: '0 16px 100px' }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={promoUrl}
+            alt="Promoción"
+            style={{ width: '100%', borderRadius: 16, display: 'block' }}
+          />
+        </div>
+      )}
 
       {/* ── FOOTER ── */}
       <footer

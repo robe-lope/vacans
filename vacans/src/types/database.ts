@@ -143,6 +143,26 @@ export type Database = {
         Update: Partial<Database['public']['Tables']['solicitudes']['Insert']>
         Relationships: []
       }
+      promos: {
+        Row: {
+          id: string
+          profesional_id: string
+          imagen_url: string
+          caduca_en: string
+          notificacion_enviada: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          profesional_id: string
+          imagen_url: string
+          caduca_en: string
+          notificacion_enviada?: boolean
+          created_at?: string
+        }
+        Update: Partial<Database['public']['Tables']['promos']['Insert']>
+        Relationships: []
+      }
     }
     Views: Record<string, never>
     Functions: Record<string, never>
