@@ -40,3 +40,26 @@ export async function notificarProfesional(params: {
   )
   return res.ok
 }
+
+export async function enviarMensajeTexto(
+  telefono: string,
+  texto: string
+): Promise<boolean> {
+  const res = await fetch(
+    `${GRAPH_API_URL}/${process.env.WA_PHONE_NUMBER_ID}/messages`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.WA_ACCESS_TOKEN}`,
+      },
+      body: JSON.stringify({
+        messaging_product: 'whatsapp',
+        to: telefono,
+        type: 'text',
+        text: { body: texto },
+      }),
+    }
+  )
+  return res.ok
+}

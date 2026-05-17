@@ -42,19 +42,25 @@ export default function OAuthButtons() {
       <div className="grid grid-cols-2 gap-2.5">
         <button
           type="button"
-          onClick={() => signIn('google')}
-          className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border border-zinc-200 bg-white text-sm font-medium text-zinc-700 hover:bg-zinc-50 transition-colors"
+          disabled
+          className="relative flex flex-col items-center justify-center gap-1 px-3 py-2.5 rounded-xl border border-zinc-200 bg-white text-sm font-medium text-zinc-400 opacity-60 cursor-not-allowed"
         >
-          <GoogleIcon />
-          Google
+          <span className="flex items-center gap-2">
+            <GoogleIcon />
+            Google
+          </span>
+          <span className="text-[10px] font-semibold text-zinc-400 tracking-wide uppercase">Próximamente</span>
         </button>
         <button
           type="button"
-          onClick={() => signIn('facebook')}
-          className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border border-zinc-200 bg-white text-sm font-medium text-zinc-700 hover:bg-zinc-50 transition-colors"
+          disabled
+          className="relative flex flex-col items-center justify-center gap-1 px-3 py-2.5 rounded-xl border border-zinc-200 bg-white text-sm font-medium text-zinc-400 opacity-60 cursor-not-allowed"
         >
-          <FacebookIcon />
-          Facebook
+          <span className="flex items-center gap-2">
+            <FacebookIcon />
+            Facebook
+          </span>
+          <span className="text-[10px] font-semibold text-zinc-400 tracking-wide uppercase">Próximamente</span>
         </button>
       </div>
     </div>

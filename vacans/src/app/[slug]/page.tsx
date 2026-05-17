@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const supabase = await createClient()
   const { data } = await supabase
     .from('profesionales')
-    .select('nombre_negocio, descripcion')
+    .select('nombre_negocio, descripcion, foto_url')
     .eq('slug', slug)
     .eq('activo', true)
     .single()
@@ -25,7 +25,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `${data.nombre_negocio} — Vacans`,
       description: data.descripcion ?? 'Reservá tu turno online',
-      images: [`/api/og/${slug}`],
+      images: [
+        ...(data.foto_url ? [{ url: data.foto_url, width: 400, height: 400 }] : []),
+        { url: `/api/og/${slug}`, width: 1200, height: 630 },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
