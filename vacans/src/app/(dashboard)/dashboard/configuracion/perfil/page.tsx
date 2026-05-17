@@ -7,7 +7,7 @@ export default async function PerfilPage() {
 
   const { data: profesional } = await supabase
     .from('profesionales')
-    .select('nombre_negocio, descripcion, telefono_wa, slug, email_contacto')
+    .select('nombre_negocio, descripcion, telefono_wa, slug, email_contacto, foto_url')
     .eq('user_id', user!.id)
     .single()
 
@@ -17,7 +17,11 @@ export default async function PerfilPage() {
         <h1 className="text-xl font-semibold text-zinc-900">Perfil del negocio</h1>
         <p className="text-sm text-zinc-500 mt-0.5">Datos que se muestran en tu página pública.</p>
       </div>
-      <PerfilForm profesional={profesional} />
+      <PerfilForm
+        profesional={profesional}
+        userId={user!.id}
+        fotoUrl={profesional?.foto_url ?? null}
+      />
     </div>
   )
 }

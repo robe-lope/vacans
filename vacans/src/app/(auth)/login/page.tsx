@@ -3,6 +3,7 @@
 import { useState, useTransition } from 'react'
 import Link from 'next/link'
 import { login } from '../actions'
+import OAuthButtons from '../OAuthButtons'
 
 export default function LoginPage() {
   const [isPending, startTransition] = useTransition()
@@ -25,7 +26,7 @@ export default function LoginPage() {
         <p className="text-sm text-zinc-500 mt-1">Ingresá a tu cuenta</p>
       </div>
 
-      <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm p-6">
+      <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm p-6 space-y-4">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-zinc-700 mb-1.5">Email</label>
@@ -65,6 +66,7 @@ export default function LoginPage() {
             {isPending ? 'Ingresando…' : 'Ingresar'}
           </button>
         </form>
+        <OAuthButtons />
       </div>
 
       <p className="text-center text-sm text-zinc-500 mt-5">

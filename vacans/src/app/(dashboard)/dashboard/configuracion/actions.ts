@@ -36,6 +36,8 @@ export async function updatePerfil(formData: FormData): Promise<ActionResult> {
 
   if (existing) return { error: 'Ese slug ya está en uso. Elegí otro.' }
 
+  const fotoUrl = formData.get('foto_url') as string | null
+
   const { error } = await supabase
     .from('profesionales')
     .update({
@@ -43,6 +45,7 @@ export async function updatePerfil(formData: FormData): Promise<ActionResult> {
       descripcion:    (formData.get('descripcion') as string).trim() || null,
       telefono_wa:    (formData.get('telefono_wa') as string).trim(),
       slug,
+      ...(fotoUrl ? { foto_url: fotoUrl } : {}),
     })
     .eq('user_id', user.id)
 

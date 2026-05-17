@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
-  LayoutDashboard, CalendarDays, User, Scissors,
+  LayoutDashboard, CalendarDays, User, CalendarCog,
   Clock, Palette, LogOut, Menu, X, ExternalLink,
 } from 'lucide-react'
 import { logout } from '@/app/(auth)/actions'
@@ -15,7 +15,7 @@ const MAIN_NAV = [
 ]
 const CONFIG_NAV = [
   { label: 'Perfil', href: '/dashboard/configuracion/perfil', icon: User },
-  { label: 'Tipos de turno', href: '/dashboard/configuracion/tipos', icon: Scissors },
+  { label: 'Configuración de Turnos', href: '/dashboard/configuracion/tipos', icon: CalendarCog },
   { label: 'Horarios', href: '/dashboard/configuracion/disponibilidad', icon: Clock },
   { label: 'Apariencia', href: '/dashboard/configuracion/apariencia', icon: Palette },
 ]
@@ -30,7 +30,7 @@ export default function Sidebar({ nombreNegocio, slug, email }: Props) {
     const active = href === '/dashboard' ? pathname === href : pathname.startsWith(href)
     return `flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
       active
-        ? 'bg-indigo-50 text-indigo-700'
+        ? 'bg-red-50 text-red-700'
         : 'text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900'
     }`
   }
@@ -62,7 +62,7 @@ export default function Sidebar({ nombreNegocio, slug, email }: Props) {
             href={`/${slug}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-xs text-zinc-500 hover:text-indigo-600 transition-colors"
+            className="flex items-center gap-1.5 text-xs text-zinc-500 hover:text-red-600 transition-colors"
           >
             <ExternalLink className="w-3.5 h-3.5" />
             Ver mi página

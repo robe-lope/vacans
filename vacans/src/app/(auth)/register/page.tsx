@@ -3,6 +3,7 @@
 import { useState, useTransition } from 'react'
 import Link from 'next/link'
 import { register } from '../actions'
+import OAuthButtons from '../OAuthButtons'
 
 const SLUG_RE = /^[a-z0-9][a-z0-9-]*[a-z0-9]$/
 
@@ -56,7 +57,7 @@ export default function RegisterPage() {
           </a>
         </div>
       ) : (
-      <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm p-6">
+      <div className="bg-white rounded-2xl border border-zinc-200 shadow-sm p-6 space-y-4">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-zinc-700 mb-1.5">
@@ -155,6 +156,7 @@ export default function RegisterPage() {
             {isPending ? 'Creando cuenta…' : 'Crear mi página'}
           </button>
         </form>
+        <OAuthButtons />
       </div>
       )}
 

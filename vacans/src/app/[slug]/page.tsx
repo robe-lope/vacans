@@ -22,6 +22,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${data.nombre_negocio} — Vacans`,
     description: data.descripcion ?? 'Reservá tu turno online',
+    openGraph: {
+      title: `${data.nombre_negocio} — Vacans`,
+      description: data.descripcion ?? 'Reservá tu turno online',
+      images: [`/api/og/${slug}`],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      images: [`/api/og/${slug}`],
+    },
   }
 }
 
