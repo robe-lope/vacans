@@ -96,12 +96,12 @@ export default async function DashboardPage() {
 
       {/* Link público */}
       {profesional?.slug && (
-        <div className="bg-white rounded-2xl border border-zinc-200 p-4 flex items-center justify-between gap-4">
+        <div className="bg-white rounded-2xl border border-zinc-200 p-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-widest text-zinc-400 mb-1">Tu página pública</p>
             <p className="text-sm text-zinc-700 font-medium truncate">{appUrl}/{profesional.slug}</p>
           </div>
-          <div className="flex items-center gap-3 flex-shrink-0">
+          <div className="flex items-center gap-2 flex-wrap">
             <ShareButton
               url={`${appUrl}/${profesional.slug}`}
               nombreNegocio={profesional.nombre_negocio ?? ''}
