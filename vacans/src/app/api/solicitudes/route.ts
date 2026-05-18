@@ -48,6 +48,9 @@ export async function POST(request: Request) {
     db.from('tipos_turno').select('nombre, duracion_mins').eq('id', tipo_turno_id).single(),
   ])
 
+  console.log('[DEBUG] profRes:', JSON.stringify(profRes.data), 'error:', profRes.error?.message)
+  console.log('[DEBUG] tipoRes:', JSON.stringify(tipoRes.data), 'error:', tipoRes.error?.message)
+
   if (profRes.data && tipoRes.data) {
     const telefono  = profRes.data.telefono_wa
     const tipoNombre = `${tipoRes.data.nombre} (${tipoRes.data.duracion_mins} min)`
