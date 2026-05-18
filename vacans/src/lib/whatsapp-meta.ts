@@ -38,6 +38,10 @@ export async function notificarProfesional(params: {
       }),
     }
   )
+  if (!res.ok) {
+    const body = await res.text().catch(() => '(no body)')
+    console.error(`[WA] notificarProfesional falló — status ${res.status}:`, body)
+  }
   return res.ok
 }
 

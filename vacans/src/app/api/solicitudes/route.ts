@@ -1,5 +1,5 @@
 import { createServiceClient } from '@/lib/supabase/server'
-import { notificarProfesional } from '@/lib/whatsapp-meta'
+import { notificarProfesional, enviarMensajeTexto } from '@/lib/whatsapp-meta'
 import { NextResponse } from 'next/server'
 
 const FULL_DAY   = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado']
@@ -49,18 +49,25 @@ export async function POST(request: Request) {
   ])
 
   if (profRes.data && tipoRes.data) {
+    const telefono  = profRes.data.telefono_wa
+    const tipoNombre = `${tipoRes.data.nombre} (${tipoRes.data.duracion_mins} min)`
+    const fechaStr  = fechaHumana(fecha)
+    const horaStr   = hora_inicio.slice(0, 5)
+
+    // Template para apertura de sesión (cold outbound)
     notificarProfesional({
-      telefonoProfesional: profRes.data.telefono_wa,
+      telefonoProfesional: telefono,
       nombreCliente: 'Anónimo',
-      tipoTurno: `${tipoRes.data.nombre} (${tipoRes.data.duracion_mins} min)`,
-      fecha: fechaHumana(fecha),
-      hora: hora_inicio.slice(0, 5),
+      tipoTurno: tipoNombre,
+      fecha: fechaStr,
+      hora: horaStr,
       solicitudId: solicitud.id,
-    })
-      .then(ok => {
-        if (!ok) console.error('[WA] notificarProfesional devolvió false', { profesional_id, solicitudId: solicitud.id })
-      })
-      .catch(err => console.error('[WA] notificarProfesional excepción', err))
+    }).catch(e => console.error('[WA] template error:', e))
+
+    // Texto con info completa + instrucciones para confirmar/rechazar
+    const mensaje = `📅 *Nueva solicitud de turno*\n\n👤 Anónimo\n🗂 ${tipoNombre}\n📆 ${fechaStr} a las ${horaStr}\n\nRespondé *1* para confirmar o *2* para rechazar.`
+    enviarMensajeTexto(telefono, mensaje)
+      .catch(e => console.error('[WA] text notification error:', e))
   }
 
   return NextResponse.json({ id: solicitud.id })
