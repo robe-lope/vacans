@@ -49,14 +49,18 @@ export async function POST(request: Request) {
   ])
 
   if (profRes.data && tipoRes.data) {
-    await notificarProfesional({
+    notificarProfesional({
       telefonoProfesional: profRes.data.telefono_wa,
       nombreCliente: 'Anónimo',
       tipoTurno: `${tipoRes.data.nombre} (${tipoRes.data.duracion_mins} min)`,
       fecha: fechaHumana(fecha),
       hora: hora_inicio.slice(0, 5),
       solicitudId: solicitud.id,
-    }).catch(() => {}) // no bloquear si WA falla
+    })
+      .then(ok => {
+        if (!ok) console.error('[WA] notificarProfesional devolvió false', { profesional_id, solicitudId: solicitud.id })
+      })
+      .catch(err => console.error('[WA] notificarProfesional excepción', err))
   }
 
   return NextResponse.json({ id: solicitud.id })
