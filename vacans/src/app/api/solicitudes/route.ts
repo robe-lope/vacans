@@ -1,5 +1,5 @@
 import { createServiceClient } from '@/lib/supabase/server'
-import { notificarProfesional, enviarMensajeTexto } from '@/lib/whatsapp-meta'
+import { notificarProfesional } from '@/lib/whatsapp-meta'
 import { NextResponse } from 'next/server'
 
 const FULL_DAY   = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado']
