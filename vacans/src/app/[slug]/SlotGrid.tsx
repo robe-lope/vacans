@@ -32,25 +32,21 @@ function computeColorVars(hex: string): React.CSSProperties {
   const g = parseInt(h.slice(2, 4), 16)
   const b = parseInt(h.slice(4, 6), 16)
   const toHex = (v: number) => v.toString(16).padStart(2, '0')
-  const light = `#${toHex(Math.min(255, r + 51))}${toHex(Math.min(255, g + 51))}${toHex(Math.min(255, b + 51))}`
   const dark  = `#${toHex(Math.max(0, r - 51))}${toHex(Math.max(0, g - 51))}${toHex(Math.max(0, b - 51))}`
   return {
-    '--primary':       hex.startsWith('#') ? hex : `#${hex}`,
-    '--primary-light': light,
-    '--primary-dark':  dark,
-    '--primary-bg':    '#fafafa',
-    '--primary-10':    `rgba(${r},${g},${b},0.1)`,
-    '--primary-20':    `rgba(${r},${g},${b},0.2)`,
-    '--glow':          `rgba(${r},${g},${b},0.35)`,
-    '--text':          '#18181b',
-    '--text-muted':    '#71717a',
-    '--text-light':    '#a1a1aa',
-    '--surface':       '#ffffff',
-    '--surface-2':     '#fafafa',
-    '--border':        '#e4e4e7',
-    '--radius':        '14px',
-    '--radius-sm':     '8px',
-    '--radius-lg':     '20px',
+    '--brand':      hex.startsWith('#') ? hex : `#${hex}`,
+    '--brand-dark': dark,
+    '--brand-10':   `rgba(${r},${g},${b},0.1)`,
+    '--brand-glow': `rgba(${r},${g},${b},0.35)`,
+    '--bg':         '#fafafa',
+    '--text':       '#18181b',
+    '--text-muted': '#71717a',
+    '--text-light': '#a1a1aa',
+    '--surface':    '#ffffff',
+    '--border':     '#e4e4e7',
+    '--radius':     '14px',
+    '--radius-sm':  '8px',
+    '--radius-lg':  '20px',
   } as React.CSSProperties
 }
 
@@ -116,23 +112,29 @@ export default function SlotGrid({ profesional, tiposTurno, slotsByTipo, fechaDe
   return (
     <div
       className="min-h-screen pb-24 font-sans"
-      style={{ ...colorVars, backgroundColor: 'var(--primary-bg)', color: 'var(--text)' }}
+      style={{ ...colorVars, backgroundColor: 'var(--bg)', color: 'var(--text)' }}
       onClick={() => setSelectedSlot(null)}
     >
+      {/* Slot hover style */}
+      <style>{`
+        .slot-card { transition: background 150ms ease; }
+        .slot-card:hover { background: var(--brand-10) !important; }
+      `}</style>
+
       {/* ── HEADER ── */}
       <header
         className="sticky top-0 z-10 bg-white"
         style={{ borderBottom: '1px solid var(--border)', boxShadow: '0 1px 12px rgba(0,0,0,0.06)' }}
       >
-        <div className="flex items-center gap-3.5 px-4 pt-5 mb-4">
+        <div className="flex items-center gap-3.5 px-4 pt-6 mb-4">
           {/* Avatar */}
           <div
-            className="rounded-full flex items-center justify-center text-white font-serif text-xl flex-shrink-0 overflow-hidden"
+            className="rounded-full flex items-center justify-center text-white font-bold text-xl flex-shrink-0 overflow-hidden"
             style={{
               width: 52, height: 52,
-              background: `linear-gradient(135deg, var(--primary), var(--primary-dark))`,
-              border: '2px solid var(--primary-light)',
-              boxShadow: '0 0 16px var(--glow)',
+              background: `linear-gradient(135deg, var(--brand), var(--brand-dark))`,
+              border: '2px solid var(--brand)',
+              boxShadow: '0 0 12px var(--brand-glow)',
             }}
           >
             {profesional.foto_url
@@ -142,11 +144,11 @@ export default function SlotGrid({ profesional, tiposTurno, slotsByTipo, fechaDe
 
           {/* Info */}
           <div className="flex-1 min-w-0">
-            <h1 className="font-serif text-xl leading-tight truncate" style={{ color: 'var(--text)' }}>
+            <h1 className="text-2xl font-bold leading-tight truncate" style={{ color: 'var(--text)' }}>
               {profesional.nombre_negocio}
             </h1>
             {profesional.descripcion && (
-              <p className="text-[13px] font-light mt-0.5 truncate" style={{ color: 'var(--text-muted)' }}>
+              <p className="text-sm mt-0.5 truncate" style={{ color: 'var(--text-muted)' }}>
                 {profesional.descripcion}
               </p>
             )}
@@ -154,8 +156,8 @@ export default function SlotGrid({ profesional, tiposTurno, slotsByTipo, fechaDe
 
           {/* Badge */}
           <span
-            className="text-[10px] font-semibold tracking-widest uppercase px-2 py-1 rounded-full flex-shrink-0"
-            style={{ color: 'var(--primary)', background: 'var(--primary-10)', boxShadow: '0 0 10px var(--glow)' }}
+            className="text-xs font-medium px-2 py-1 rounded-full flex-shrink-0"
+            style={{ color: 'var(--brand)', background: 'var(--brand-10)' }}
           >
             vacans
           </span>
@@ -170,10 +172,10 @@ export default function SlotGrid({ profesional, tiposTurno, slotsByTipo, fechaDe
                 <button
                   key={tipo.id}
                   onClick={e => { e.stopPropagation(); handleTipoClick(tipo.id) }}
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-full border-[1.5px] whitespace-nowrap text-[13px] font-medium flex-shrink-0"
+                  className="flex items-center gap-1.5 rounded-full whitespace-nowrap text-[13px] flex-shrink-0"
                   style={active
-                    ? { background: 'var(--primary)', borderColor: 'var(--primary)', color: 'white' }
-                    : { background: 'transparent', borderColor: 'var(--border)', color: 'var(--text-muted)' }
+                    ? { background: 'var(--brand)', border: '1px solid var(--brand)', color: 'white', padding: '8px 20px', fontWeight: 600 }
+                    : { background: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text-muted)', padding: '8px 20px', fontWeight: 500 }
                   }
                 >
                   <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: 'currentColor', opacity: 0.6 }} />
@@ -200,14 +202,16 @@ export default function SlotGrid({ profesional, tiposTurno, slotsByTipo, fechaDe
               <button
                 key={i}
                 onClick={() => hasSlots && handleDayClick(i)}
-                className="relative flex flex-col items-center rounded-xl border-[1.5px] flex-shrink-0"
+                className="relative flex flex-col items-center flex-shrink-0"
                 style={{
                   minWidth: 54, padding: '10px 12px',
-                  background:   active ? 'var(--primary)' : 'var(--surface)',
-                  borderColor:  active ? 'var(--primary)' : 'var(--border)',
+                  background:   active ? 'var(--brand)' : 'var(--surface)',
+                  border:       `1px solid ${active ? 'var(--brand)' : 'var(--border)'}`,
+                  borderRadius: 14,
                   color:        active ? 'white' : hasSlots ? 'var(--text)' : 'var(--text-light)',
                   cursor:       hasSlots ? 'pointer' : 'not-allowed',
                   opacity:      hasSlots ? 1 : 0.45,
+                  boxShadow:    active ? '0 0 10px var(--brand-glow)' : undefined,
                   gap: 4,
                 }}
               >
@@ -217,11 +221,11 @@ export default function SlotGrid({ profesional, tiposTurno, slotsByTipo, fechaDe
                 >
                   {DAY_NAMES[d.getUTCDay()]}
                 </span>
-                <span className="font-serif text-xl leading-none">{d.getUTCDate()}</span>
+                <span className="text-xl font-semibold leading-none">{d.getUTCDate()}</span>
                 {hasSlots && (
                   <span
                     className="absolute bottom-1.5 w-1.5 h-1.5 rounded-full"
-                    style={{ background: active ? 'white' : 'var(--primary)' }}
+                    style={{ background: active ? 'white' : 'var(--brand)' }}
                   />
                 )}
               </button>
@@ -233,12 +237,12 @@ export default function SlotGrid({ profesional, tiposTurno, slotsByTipo, fechaDe
       {/* ── SLOTS ── */}
       <section className="px-4 pt-6" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="font-serif text-lg font-normal" style={{ color: 'var(--text)' }}>
+          <h2 className="text-lg font-semibold" style={{ color: 'var(--text)' }}>
             {dayLabel}
           </h2>
           <span
             className="text-xs px-2.5 py-0.5 rounded-full border"
-            style={{ color: 'var(--text-muted)', background: 'var(--surface-2)', borderColor: 'var(--border)' }}
+            style={{ color: 'var(--text-muted)', background: 'var(--bg)', borderColor: 'var(--border)' }}
           >
             {slotsForDay.length} turno{slotsForDay.length !== 1 ? 's' : ''}
           </span>
@@ -261,17 +265,20 @@ export default function SlotGrid({ profesional, tiposTurno, slotsByTipo, fechaDe
               return (
                 <div
                   key={hora}
-                  className="relative overflow-hidden text-center cursor-pointer select-none"
+                  className="slot-card relative overflow-hidden text-center cursor-pointer select-none"
                   style={{
-                    background:   'var(--surface)',
-                    border:       `1.5px solid ${active ? 'var(--primary)' : 'var(--border)'}`,
-                    boxShadow:    active ? '0 0 0 2.5px var(--primary), 0 0 16px var(--glow)' : undefined,
+                    background:   active ? 'var(--brand-10)' : 'var(--surface)',
+                    border:       active ? '2px solid var(--brand)' : '1px solid var(--border)',
+                    boxShadow:    active ? '0 0 14px var(--brand-glow)' : '0 2px 8px rgba(0,0,0,0.03)',
                     borderRadius: 'var(--radius)',
                     padding:      '18px 10px',
                   }}
                   onClick={e => handleSlotClick(e, hora)}
                 >
-                  <div className="font-serif leading-none" style={{ fontSize: 22, color: 'var(--text)' }}>
+                  <div
+                    className="leading-none"
+                    style={{ fontSize: 22, color: active ? 'var(--brand)' : 'var(--text)', fontWeight: active ? 700 : 400 }}
+                  >
                     {hora}
                   </div>
                   <div
@@ -297,7 +304,6 @@ export default function SlotGrid({ profesional, tiposTurno, slotsByTipo, fechaDe
                     }}
                     onClick={e => {
                       e.stopPropagation()
-                      // Fire-and-forget: record solicitud in DB
                       fetch('/api/solicitudes', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -324,32 +330,37 @@ export default function SlotGrid({ profesional, tiposTurno, slotsByTipo, fechaDe
 
       {/* ── PROMO SEMANAL ── */}
       {promoUrl && (
-        <div style={{ padding: '0 16px 100px' }}>
+        <div style={{ padding: '24px 16px 100px' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={promoUrl}
             alt="Promoción"
-            style={{ width: '100%', borderRadius: 16, display: 'block' }}
+            style={{ width: '100%', borderRadius: 16, display: 'block', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}
           />
         </div>
       )}
 
       {/* ── FOOTER ── */}
       <footer
-        className="fixed bottom-0 left-0 right-0 text-center bg-white z-10"
-        style={{ borderTop: '1px solid var(--border)', padding: '10px 0' }}
+        className="fixed bottom-0 left-0 right-0 bg-white z-10"
+        style={{ borderTop: '1px solid var(--border)', padding: '12px 16px' }}
       >
-        <a
-          href="https://vacans.vercel.app"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-xs flex items-center justify-center gap-1.5"
-          style={{ color: 'var(--text-light)', textDecoration: 'none' }}
-        >
-          Gestionado con{' '}
-          <span style={{ fontWeight: 600, color: 'var(--primary)', textShadow: '0 0 10px var(--glow)' }}>vacans</span>
-          {' '}· Creá tu página gratis
-        </a>
+        <div className="flex items-center justify-between text-xs">
+          <span style={{ color: 'var(--text-light)' }}>
+            Gestionado con{' '}
+            <span style={{ fontWeight: 700, color: 'var(--brand)', letterSpacing: '-0.3px', textShadow: '0 0 8px var(--brand-glow)' }}>
+              vacans
+            </span>
+          </span>
+          <a
+            href="https://vacans.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: 'var(--brand)', textDecoration: 'none', fontWeight: 600 }}
+          >
+            Creá tu página gratis →
+          </a>
+        </div>
       </footer>
     </div>
   )

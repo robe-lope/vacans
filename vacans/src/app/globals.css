@@ -16,14 +16,17 @@
 
 @layer base {
   :root {
-    --background: #fafafa;
-    --foreground: #18181b;
-    --border: #e4e4e7;
-    --ring: #a1a1aa;
-    --radius: 0.625rem;
-    --brand: #CC0000;
-    --brand-dark: #990000;
-    --brand-10: rgba(204,0,0,0.1);
+    --bg:         #fafafa;
+    --surface:    #ffffff;
+    --text:       #18181b;
+    --text-muted: #71717a;
+    --border:     #e4e4e7;
+
+    /* Brand — fallback; se sobreescribe dinámicamente por profesional */
+    --brand:      #FF1F2D;
+    --brand-dark: color-mix(in srgb, var(--brand) 80%, black);
+    --brand-10:   color-mix(in srgb, var(--brand) 10%, white);
+    --brand-glow: color-mix(in srgb, var(--brand) 35%, transparent);
   }
 
   * {
@@ -31,7 +34,7 @@
   }
 
   body {
-    background-color: var(--background);
-    color: var(--foreground);
+    background-color: var(--bg);
+    color: var(--text);
   }
 }
