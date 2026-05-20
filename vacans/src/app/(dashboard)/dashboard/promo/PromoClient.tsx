@@ -28,7 +28,9 @@ export default function PromoClient({ profesionalId, activePromo }: Props) {
     }
     setUploading(true)
     const supabase = createClient()
-    const path = `${profesionalId}/${Date.now()}`
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) { setStatus('error'); setMessage('No autenticado.'); setUploading(false); return }
+    const path = `${user.id}/${Date.now()}`
     const { error } = await supabase.storage
       .from('promos')
       .upload(path, file, { upsert: false, contentType: file.type })
