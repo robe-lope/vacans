@@ -148,7 +148,7 @@ export default function SlotGrid({ profesional, tiposTurno, slotsByTipo, fechaDe
               {profesional.nombre_negocio}
             </h1>
             {profesional.descripcion && (
-              <p className="text-sm mt-0.5 truncate" style={{ color: 'var(--text-muted)' }}>
+              <p className="text-sm mt-0.5" style={{ color: 'var(--text-muted)', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                 {profesional.descripcion}
               </p>
             )}
@@ -156,7 +156,7 @@ export default function SlotGrid({ profesional, tiposTurno, slotsByTipo, fechaDe
 
           {/* Badge */}
           <span
-            className="text-xs font-medium px-2 py-1 rounded-full flex-shrink-0"
+            className="text-[10px] font-semibold tracking-wider uppercase px-2 py-1 rounded-full flex-shrink-0"
             style={{ color: 'var(--brand)', background: 'var(--brand-10)' }}
           >
             vacans
@@ -287,6 +287,10 @@ export default function SlotGrid({ profesional, tiposTurno, slotsByTipo, fechaDe
                   >
                     {period}
                   </div>
+                  <span
+                    className="absolute bottom-2 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full"
+                    style={{ background: 'var(--brand)', opacity: active ? 0 : 0.5 }}
+                  />
 
                   {/* Spring overlay */}
                   <a
@@ -347,7 +351,7 @@ export default function SlotGrid({ profesional, tiposTurno, slotsByTipo, fechaDe
       >
         <div className="flex items-center justify-between text-xs">
           <span style={{ color: 'var(--text-light)' }}>
-            Gestionado con{' '}
+            ✦ Gestionado con{' '}
             <span style={{ fontWeight: 700, color: 'var(--brand)', letterSpacing: '-0.3px', textShadow: '0 0 8px var(--brand-glow)' }}>
               vacans
             </span>
